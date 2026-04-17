@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7 Ideal Jornada 00</title>
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(120deg, #03045e, #001233 70%);
+      color: white;
+    }
+
+    .container-informe {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .header-informe {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 3px solid #00b4d8;
+    }
+
+    .header-informe h1 {
+      color: #00b4d8;
+    }
+
+    .container-responsive {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .header-responsive {
+      background: #d32f2f;
+      color: white;
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .field-container-responsive {
+      padding: 15px;
+      background: #f0f0f0;
+    }
+
+    .field-responsive {
+      position: relative;
+      height: 450px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+      overflow: hidden;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    /* CÉSPED COMO EL ORIGINAL */
+    .grass-pattern-responsive {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.3;
+    }
+
+    .players-formation-responsive {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .player-row-responsive {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .player-responsive {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 70px;
+      position: relative;
+    }
+
+    .player-circle-responsive {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #d32f2f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      border: 2px solid white;
+      z-index: 2;
+      position: relative;
+    }
+
+    .player-name-responsive {
+      margin-top: 4px;
+      font-size: 0.7rem;
+      text-align: center;
+      max-width: 70px;
+      font-weight: bold;
+      line-height: 1.1;
+    }
+
+    /* ESTADÍSTICAS ARRIBA DEL CÍRCULO */
+    .player-stats-right {
+  position: absolute;
+  left: 48px;
+  top: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  z-index: 3;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.player-goals-row,
+.player-assists-row {
+  white-space: nowrap;
+}
+
+.player-stats-left {
+  position: absolute;
+  right: 48px;
+  top: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.85rem;
+  line-height: 1;
+  z-index: 3;
+}
+  </style>
+</head>
+<body>
+
+<div class="container-informe">
+
+  <div class="header-informe">
+    <h1>7 Ideal Jornada 00</h1>
+  </div>
+
+  <div class="container-responsive">
+    <div class="header-responsive">
+      <div>E.F.M.O. Boadilla</div>
+      <div>2-3-1</div>
+    </div>
+
+    <div class="field-container-responsive">
+      <div class="field-responsive">
+        <div class="grass-pattern-responsive"></div>
+        <div class="players-formation-responsive" id="formation-container"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const players = {
+  portero: [
+    { number: 'SB', name: 'Gabri', goals: 0, assists: 0, cards: '🔒' }
+  ],
+  defensas: [
+    { number: '2', name: 'Defensa 1', goals: 0, assists: 1, cards: '' },
+    { number: '5', name: 'Defensa 4', goals: 0, assists: 0, cards: '' }
+  ],
+  mediocentros: [
+    { number: '6', name: 'Medio 1', goals: 0, assists: 1, cards: '' },
+    { number: '7', name: 'Medio 2', goals: 2, assists: 0, cards: '' },
+    { number: '11', name: 'Medio 5', goals: 0, assists: 0, cards: '' }
+  ],
+  delanteros: [
+    { number: '9', name: 'Delantero', goals: 5, assists: 2, cards: '' }
+  ]
+};
+
+const formation = [
+  players.delanteros,
+  players.mediocentros,
+  players.defensas,
+  players.portero
+];
+
+function renderFormation() {
+  const container = document.getElementById('formation-container');
+  container.innerHTML = '';
+
+  formation.forEach(rowPlayers => {
+    const row = document.createElement('div');
+    row.className = 'player-row-responsive';
+
+    rowPlayers.forEach(player => {
+      const playerElement = document.createElement('div');
+      playerElement.className = 'player-responsive';
+
+      const goalsHTML = player.goals > 0 
+  ? `<div class="player-goals-row">${'⚽'.repeat(player.goals)}</div>` 
+  : '';
+
+const assistsHTML = player.assists > 0 
+  ? `<div class="player-assists-row">${'🅰️'.repeat(player.assists)}</div>` 
+  : '';
+      const leftStats = player.cards;
+
+      playerElement.innerHTML = `
+        <div class="player-stats-left">${leftStats}</div>
+        <div class="player-stats-right">
+        ${goalsHTML}
+        ${assistsHTML}
+        </div>
+        <div class="player-circle-responsive">${player.number}</div>
+        <div class="player-name-responsive">${player.name}</div>
+      `;
+
+      row.appendChild(playerElement);
+    });
+
+    container.appendChild(row);
+  });
+}
+
+renderFormation();
+</script>
+
+</body>
+</html>
