@@ -53,7 +53,9 @@
 
     .field-responsive {
       position: relative;
-      height: 320px;
+      max-width: 700px;   /* 👈 controla el ancho */
+      margin: 0 auto; 
+      height: 350px;
       border-radius: 8px;
       background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
       overflow: hidden;
@@ -174,20 +176,21 @@
 
 <script>
 const players = {
+  // '🔒'
   portero: [
-    { number: 'SB', name: 'Gabri', goals: 0, assists: 0, cards: '🔒' }
+    { number: 'BF', name: 'Portero', goals: 0, assists: 0, cards: '🔒' }
   ],
   defensas: [
-    { number: '2', name: 'Defensa 1', goals: 0, assists: 1, cards: '' },
-    { number: '5', name: 'Defensa 4', goals: 0, assists: 0, cards: '' }
+    { number: 'A7A', name: 'Defensa 1', goals: 0, assists: 1, cards: '' },
+    { number: 'BC', name: 'Defensa 4', goals: 0, assists: 0, cards: '🔒' }
   ],
   mediocentros: [
-    { number: '6', name: 'Medio 1', goals: 0, assists: 1, cards: '' },
-    { number: '7', name: 'Medio 2', goals: 2, assists: 0, cards: '' },
-    { number: '11', name: 'Medio 5', goals: 0, assists: 0, cards: '' }
+    { number: 'PE', name: 'Medio 1', goals: 0, assists: 1, cards: '' },
+    { number: 'PC', name: 'Medio 2', goals: 2, assists: 0, cards: '' },
+    { number: 'BD', name: 'Medio 5', goals: 0, assists: 0, cards: '' }
   ],
   delanteros: [
-    { number: '9', name: 'Delantero', goals: 5, assists: 2, cards: '' }
+    { number: 'BA', name: 'Delantero', goals: 5, assists: 2, cards: '' }
   ]
 };
 
