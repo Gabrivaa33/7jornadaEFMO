@@ -23,18 +23,18 @@
     }
 
     .header-informe {
-  width: 700px;
-  margin: 0 auto 40px auto;
-  text-align: center;
-  border-bottom: 3px solid #00b4d8;
-}
+      width: 700px;
+      margin: 0 auto 40px auto;
+      text-align: center;
+      border-bottom: 3px solid #00b4d8;
+    }
 
     .header-informe h1 {
       color: #00b4d8;
     }
 
     .container-responsive {
-      max-width: 700px;   /* 👈 controla el ancho */
+      max-width: 700px;
       margin: 0 auto;
       background: white;
       border-radius: 10px;
@@ -56,8 +56,8 @@
 
     .field-responsive {
       position: relative;
-      max-width: 700px;   /* 👈 controla el ancho */
-      margin: 0 auto; 
+      max-width: 700px;
+      margin: 0 auto;
       height: 350px;
       border-radius: 8px;
       background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
@@ -65,7 +65,6 @@
       box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
     }
 
-    /* CÉSPED COMO EL ORIGINAL */
     .grass-pattern-responsive {
       position: absolute;
       inset: 0;
@@ -109,7 +108,6 @@
       font-weight: bold;
       border: 2px solid white;
       z-index: 2;
-      position: relative;
     }
 
     .player-name-responsive {
@@ -121,38 +119,81 @@
       line-height: 1.1;
     }
 
-    /* ESTADÍSTICAS ARRIBA DEL CÍRCULO */
+    /* =========================
+       ESTADÍSTICAS (FIXED)
+    ========================= */
+
     .player-stats-right {
-  position: absolute;
-  left: 48px;
-  top: -10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  z-index: 3;
-  font-size: 0.85rem;
-  line-height: 1;
-}
+      position: absolute;
+      left: 48px;
+      top: -10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      z-index: 3;
+      font-size: 0.85rem;
+      line-height: 1;
+      white-space: nowrap;
+    }
 
-.player-goals-row,
-.player-assists-row {
-  white-space: nowrap;
-}
+    .player-stats-left {
+      position: absolute;
+      right: 48px;
+      top: -10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 0.85rem;
+      line-height: 1;
+      z-index: 3;
+      white-space: nowrap;
+    }
 
-.player-stats-left {
-  position: absolute;
-  right: 48px;
-  top: -10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-size: 0.85rem;
-  line-height: 1;
-  z-index: 3;
-}
+    .player-goals-row,
+    .player-assists-row {
+      white-space: nowrap;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    /* =========================
+       ENTRENADOR
+    ========================= */
+
+    .coach-container {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .coach-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1e88e5;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      border: 2px solid white;
+    }
+
+    .coach-name {
+      font-size: 0.65rem;
+      margin-top: 3px;
+      font-weight: bold;
+      text-align: center;
+    }
+
   </style>
 </head>
+
 <body>
 
 <div class="container-informe">
@@ -162,6 +203,7 @@
   </div>
 
   <div class="container-responsive">
+
     <div class="header-responsive">
       <div>E.F.M.O. Boadilla</div>
       <div>2-3-1</div>
@@ -169,17 +211,27 @@
 
     <div class="field-container-responsive">
       <div class="field-responsive">
+
         <div class="grass-pattern-responsive"></div>
+
         <div class="players-formation-responsive" id="formation-container"></div>
+
+        <!-- ENTRENADOR -->
+        <div class="coach-container">
+          <div class="coach-circle">A7D</div>
+          <div class="coach-name">Entrenador</div>
+        </div>
+
       </div>
     </div>
+
   </div>
 
 </div>
 
 <script>
+
 const players = {
-  // '🔒'
   portero: [
     { number: 'BF', name: 'Portero', goals: 0, assists: 0, cards: '🔒' }
   ],
@@ -213,29 +265,28 @@ function renderFormation() {
     row.className = 'player-row-responsive';
 
     rowPlayers.forEach(player => {
-      const playerElement = document.createElement('div');
-      playerElement.className = 'player-responsive';
+      const el = document.createElement('div');
+      el.className = 'player-responsive';
 
-      const goalsHTML = player.goals > 0 
-  ? `<div class="player-goals-row">${'⚽'.repeat(player.goals)}</div>` 
-  : '';
+      const goalsHTML = player.goals > 0
+        ? `<div class="player-goals-row">${Array(player.goals).fill('⚽').join('')}</div>`
+        : '';
 
-const assistsHTML = player.assists > 0 
-  ? `<div class="player-assists-row">${'🅰️'.repeat(player.assists)}</div>` 
-  : '';
-      const leftStats = player.cards;
+      const assistsHTML = player.assists > 0
+        ? `<div class="player-assists-row">${Array(player.assists).fill('🅰️').join('')}</div>`
+        : '';
 
-      playerElement.innerHTML = `
-        <div class="player-stats-left">${leftStats}</div>
+      el.innerHTML = `
+        <div class="player-stats-left">${player.cards}</div>
         <div class="player-stats-right">
-        ${goalsHTML}
-        ${assistsHTML}
+          ${goalsHTML}
+          ${assistsHTML}
         </div>
         <div class="player-circle-responsive">${player.number}</div>
         <div class="player-name-responsive">${player.name}</div>
       `;
 
-      row.appendChild(playerElement);
+      row.appendChild(el);
     });
 
     container.appendChild(row);
@@ -243,6 +294,7 @@ const assistsHTML = player.assists > 0
 }
 
 renderFormation();
+
 </script>
 
 </body>
